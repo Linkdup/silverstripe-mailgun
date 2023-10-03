@@ -662,31 +662,35 @@ class MailgunAdmin extends LeftAndMain implements PermissionProvider
     public function WebhookInstalled()
     {
         /* @var $response WebhookIndexResponse */
-        $response = $this->getCachedData('webhooks.index', null, 60 * self::WEBHOOK_CACHE_MINUTES);
+        $response = $this->getCachedData(
+            'webhooks.index',
+            null,
+            60 * self::WEBHOOK_CACHE_MINUTES
+        );
         if (!$response) {
             return false;
         }
         $url = $this->WebhookUrl();
         $dom = $this->getDomain();
-        if (strpos($response->getBounceUrl(), $dom)) {
+        if (strpos($response->getBounceUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getDeliverUrl(), $dom)) {
+        if (strpos($response->getDeliverUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getDropUrl(), $dom)) {
+        if (strpos($response->getDropUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getSpamUrl(), $dom)) {
+        if (strpos($response->getSpamUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getUnsubscribeUrl(), $dom)) {
+        if (strpos($response->getUnsubscribeUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getClickUrl(), $dom)) {
+        if (strpos($response->getClickUrl() ?? '', $dom)) {
             return true;
         }
-        if (strpos($response->getOpenUrl(), $dom)) {
+        if (strpos($response->getOpenUrl() ?? '', $dom)) {
             return true;
         }
         return false;
